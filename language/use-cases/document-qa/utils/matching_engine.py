@@ -89,7 +89,7 @@ class MatchingEngine(VectorStore):
         self.gcs_client = gcs_client
         self.credentials = credentials
         self.gcs_bucket_name = gcs_bucket_name
-        logger.info("Yahoooo!")
+        print("Yahoooo!")
 
     def _validate_google_libraries_installation(self) -> None:
         """Validates that Google libraries that are needed are installed."""
