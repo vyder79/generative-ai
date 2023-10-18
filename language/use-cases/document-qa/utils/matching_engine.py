@@ -89,7 +89,7 @@ class MatchingEngine(VectorStore):
         self.gcs_client = gcs_client
         self.credentials = credentials
         self.gcs_bucket_name = gcs_bucket_name
-        print("Yahoooo!")
+        logger.info("vdr helper functions used.")
 
     def _validate_google_libraries_installation(self) -> None:
         """Validates that Google libraries that are needed are installed."""
@@ -119,7 +119,7 @@ class MatchingEngine(VectorStore):
         Returns:
             List of ids from adding the texts into the vectorstore.
         """
-        logger.debug("Embedding documents.")
+        logger.info("Embedding documents.")
         embeddings = self.embedding.embed_documents(list(texts))
         insert_datapoints_payload = []
         ids = []
@@ -151,7 +151,7 @@ class MatchingEngine(VectorStore):
             )
             _ = self.index_client.upsert_datapoints(request=upsert_request)
 
-        logger.debug("Updated index with new configuration.")
+        logger.info("Updated index with new configuration.")
         logger.info(f"Indexed {len(ids)} documents to Matching Engine.")
 
         return ids
@@ -219,12 +219,10 @@ class MatchingEngine(VectorStore):
             A list of k matching documents.
         """
 
-        logger.debug(f"Embedding query {query}.")
-        print(f"Embedding query {query}.")
+        logger.info(f"Embedding query {query}.")
         embedding_query = self.embedding.embed_documents([query])
         deployed_index_id = self._get_index_id()
-        logger.debug(f"Deployed Index ID = {deployed_index_id}")
-        print(f"Deployed Index ID = {deployed_index_id}")
+        logger.info(f"Deployed Index ID = {deployed_index_id}")
 
         # TO-DO: Pending query sdk integration
         # response = self.endpoint.match(
@@ -243,8 +241,7 @@ class MatchingEngine(VectorStore):
         if len(response) == 0:
             return []
 
-        logger.debug(f"Found {len(response)} matches for the query {query}.")
-        print(f"Found {len(response)} matches for the query {query}.")
+        logger.info(f"Found {len(response)} matches for the query {query}.")
 
         results = []
 
@@ -271,7 +268,7 @@ class MatchingEngine(VectorStore):
             else:
                 results.append(Document(page_content=page_content, metadata=metadata))
 
-        logger.debug("Downloaded documents for query.")
+        logger.info("Downloaded documents for query.")
 
         return results
 
