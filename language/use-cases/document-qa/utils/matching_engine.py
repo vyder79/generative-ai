@@ -220,9 +220,11 @@ class MatchingEngine(VectorStore):
         """
 
         logger.debug(f"Embedding query {query}.")
+        print(f"Embedding query {query}.")
         embedding_query = self.embedding.embed_documents([query])
         deployed_index_id = self._get_index_id()
         logger.debug(f"Deployed Index ID = {deployed_index_id}")
+        print(f"Deployed Index ID = {deployed_index_id}")
 
         # TO-DO: Pending query sdk integration
         # response = self.endpoint.match(
@@ -242,6 +244,7 @@ class MatchingEngine(VectorStore):
             return []
 
         logger.debug(f"Found {len(response)} matches for the query {query}.")
+        print(f"Found {len(response)} matches for the query {query}.")
 
         results = []
 
